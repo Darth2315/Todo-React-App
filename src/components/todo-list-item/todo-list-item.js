@@ -1,66 +1,40 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import './todo-list-item.css';
 
-export default class TodoListItem extends Component {
+const TodoListItem =({label, onDeleted, onToggleDone, onToggleImportant, done, important }) => {
 
-    state = {
-        done: false,
-        important: false
-    };
-
-    onLabelClick = () => {
-        this.setState(({done}) => {
-            return {
-                done: !done
-            }
-        })
+    let className = 'todo-list-item';
+    
+    if (done) {
+        className += ' done';
     }
 
-    onImportant = () => {
-        this.setState((state) => {
-            return {
-                important: !state.important
-            }
-            
-        })
+    if (important) {
+        className += ' important';
     }
 
-    render() {
-
-        const {label, onDeleted } = this.props;
-        const { done, important } = this.state;
-
-        let className = 'todo-list-item';
-        
-        if (done) {
-            className += ' done';
-        }
-
-        if (important) {
-            className += ' important';
-        }
-
-        return (
-            <span className={className}>
-                <span
-                    className="todo-list-item-label"
-                    onClick={ this.onLabelClick }>
-                    {label}
-                </span>
-        
-                <button type="button"
-                        className="btn btn-outline-success btn-sm float-right"
-                        onClick={ this.onImportant } >
-                    <i className="fa fa-exclamation" />
-                </button>
-        
-                <button type="button"
-                        className="btn btn-outline-danger btn-sm float-right"
-                        onClick={ onDeleted }>
-                    <i className="fa fa-trash-o" />
-                </button>
-          </span>
-        )
-    }        
+    return (
+        <span className={className}>
+            <span
+                className="todo-list-item-label"
+                onClick={ onToggleDone }>
+                {label}
+            </span>
+    
+            <button type="button"
+                    className="btn btn-outline-success btn-sm float-right"
+                    onClick={ onToggleImportant } >
+                <i className="fa fa-exclamation" />
+            </button>
+    
+            <button type="button"
+                    className="btn btn-outline-danger btn-sm float-right"
+                    onClick={ onDeleted }>
+                <i className="fa fa-trash-o" />
+            </button>
+        </span>
+    )      
 }
+
+export default TodoListItem;
